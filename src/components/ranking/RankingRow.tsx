@@ -1,4 +1,5 @@
 import { TeamRanking } from '@/types/TeamRanking';
+import Image from 'next/image';
 
 export interface RankingRowProps {
   teamRanking: TeamRanking;
@@ -9,18 +10,19 @@ export interface RankingRowProps {
 }
 
 export default function RankingRow(props: RankingRowProps) {
-  const { position, teamName, teamLogoUrl } = props;
-  let { teamRanking } = props;
-  const categoryClassName = 'px-2 py-3';
+  const { position, teamName, teamLogoUrl, teamRanking } = props;
+  const categoryClassName = 'px-2 py-2';
 
   return (
     <tr className={`text-sm border-b border-gray-100 ${props.backgroundColor}`}>
       <td className={categoryClassName}>{position}</td>
       <td className={categoryClassName}>
         <div className="w-8 aspect-square overflow-hidden shrink-0">
-          <img
+          <Image
             src={teamLogoUrl}
             alt={`${teamName} logo`}
+            width={500}
+            height={500}
             className="w-full h-full object-contain"
           />
         </div>

@@ -62,7 +62,7 @@ export default function RankingTable(props: RankingTableProps) {
       setRanking(rankingSort(freshRanking, teams));
     };
     updateRanking();
-  }, [updated]);
+  }, [updated, teams]);
 
   return (
     <div className="overflow-x-auto">

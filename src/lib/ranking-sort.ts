@@ -35,8 +35,13 @@ export function rankingSort(
     /* Rule #8: Most tries score in all season  */
 
     /* By Default: Alphabetical Order */
-    const teamAName = teams.find((team) => team.id === teamA.teamId)?.name!;
-    const teamBName = teams.find((team) => team.id === teamB.teamId)?.name!;
+    const getTeamName = (id: string): string => {
+      const team = teams.find((team) => team.id === teamA.teamId);
+      if (!team) throw new Error(`Team not found by ID [${id}]`);
+      return team.name;
+    };
+    const teamAName = getTeamName(teamA.teamId);
+    const teamBName = getTeamName(teamB.teamId);
     return teamAName.toLowerCase().localeCompare(teamBName.toLowerCase());
   });
 }

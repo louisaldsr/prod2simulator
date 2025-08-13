@@ -1,12 +1,9 @@
 import Simulator from '@/components/Simulator';
 import Title from '@/components/Title';
+import { PageProps } from '../../.next/types/app/page';
 
-export default async function Home({
-  searchParams,
-}: {
-  searchParams: { day?: string };
-}) {
-  const params = await searchParams;
+export default async function Home(props: PageProps) {
+  const params = await props.searchParams;
   const selectedDay = Number(params.day) ?? 1;
   return (
     <div className="min-h-screen bg-gray-100 text-gray-900 px-4 py-8">
