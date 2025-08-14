@@ -1,3 +1,4 @@
+import { calendarRepository } from '@/repositories/calendar-repository';
 import DayMatchs from './DayMatchs';
 import DayTabs from './DayTabs';
 
@@ -7,10 +8,14 @@ export interface MatchCalendarProps {
 }
 
 export default function MatchCalendar(props: MatchCalendarProps) {
+  const regularSeasonDays = calendarRepository.regularSeasonDays;
   return (
     <section className="bg-white col-span-6 rounded-xl shadow p-6 h-fit">
       <h2>Match Calendar</h2>
-      <DayTabs numberOfDays={props.numberOfDays} />
+      <DayTabs
+        numberOfDays={props.numberOfDays}
+        regularSeasonDays={regularSeasonDays}
+      />
       <DayMatchs selectedDay={props.selectedDay} />
     </section>
   );

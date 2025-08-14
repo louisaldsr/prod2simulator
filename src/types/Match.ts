@@ -5,4 +5,6 @@ export interface Match {
   readonly awayTeamId: string;
   awayTeamScore: number;
   simulated: boolean;
+  regularSeason: boolean;
 }
+

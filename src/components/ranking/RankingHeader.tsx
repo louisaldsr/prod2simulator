@@ -7,6 +7,7 @@ export default function RankingHeader() {
         <th className={categoryClassName} colSpan={2}>
           TEAM
         </th>
+        <th className={categoryClassName}>GP</th>
         <th className={categoryClassName}>W</th>
         <th className={categoryClassName}>D</th>
         <th className={categoryClassName}>L</th>

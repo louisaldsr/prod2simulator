@@ -9,13 +9,13 @@ import { useScoreUpdate } from '@/context/ScoreContext';
 import { computeRanking } from '@/lib/ranking-computer';
 import { rankingSort } from '@/lib/ranking-sort';
 import { Calendar } from '@/types/Calendar';
+import { Team } from '@/types/Team';
 import { useEffect, useState } from 'react';
 import RankingHeader from './RankingHeader';
 import RankingRow from './RankingRow';
 
-type Team = { id: string; logoUrl: string; name: string };
 interface RankingTableProps {
-  teams: Array<Team>;
+  teams: Team[];
   calendar: Calendar;
 }
 

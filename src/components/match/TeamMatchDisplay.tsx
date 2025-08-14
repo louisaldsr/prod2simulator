@@ -1,5 +1,6 @@
 import { teamRepository } from '@/repositories/team-repository';
 import { Match } from '@/types/Match';
+import { Team } from '@/types/Team';
 import TeamMatchLogo from './TeamMatchLogo';
 import TeamMatchName from './TeamMatchName';
 import TeamMatchScore from './TeamMatchScore';
@@ -12,7 +13,21 @@ export interface TeamMatchDisplayProps {
 export default function TeamMatchDisplay(props: TeamMatchDisplayProps) {
   const { match, position } = props;
   const teamId = position === 'home' ? match.homeTeamId : match.awayTeamId;
-  const team = teamRepository.getTeamById(teamId);
+
+  let team: Team;
+  if (match.regularSeason) {
+    team = teamRepository.getTeamById(teamId);
+  } else {
+    try {
+      team = teamRepository.getTeamById(teamId);
+    } catch (error) {
+      team = {
+        id: '',
+        logoUrl: '/team-logos/tobedetermined.svg',
+        name: 'To Be Determined',
+      };
+    }
+  }
   const { name, logoUrl } = team;
 
   const isLeft = position === 'home';

@@ -36,6 +36,11 @@ export default function RankingRow(props: RankingRowProps) {
         </div>
       </td>
       <td className={categoryClassName}>{teamName}</td>
+      <td className={categoryClassName}>
+        {teamRanking.totalMatches.wins +
+          teamRanking.totalMatches.draws +
+          teamRanking.totalMatches.losses}
+      </td>
       <td className={categoryClassName}>{teamRanking.totalMatches.wins}</td>
       <td className={categoryClassName}>{teamRanking.totalMatches.draws}</td>
       <td className={categoryClassName}>{teamRanking.totalMatches.losses}</td>

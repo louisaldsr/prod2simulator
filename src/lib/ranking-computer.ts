@@ -20,7 +20,8 @@ export function computeRanking(calendar: Calendar): TeamRanking[] {
     return table.get(id)!;
   };
 
-  for (const days of calendar) {
+  const regularSeasonCalendar = calendar.slice(undefined, -3);
+  for (const days of regularSeasonCalendar) {
     for (const match of days) {
       const home = ensureTeamRanked(match.homeTeamId);
       const away = ensureTeamRanked(match.awayTeamId);

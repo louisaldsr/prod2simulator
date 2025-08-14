@@ -5,15 +5,27 @@ import { useSearchParams } from 'next/navigation';
 
 export interface DayTabsProps {
   numberOfDays: number;
+  regularSeasonDays: number;
 }
 
 export default function DayTabs(props: DayTabsProps) {
   const searchParams = useSearchParams();
   const selectedDay = Number(searchParams.get('day')) ?? 1;
+  const { numberOfDays, regularSeasonDays } = props;
+
+  const getTabString = (day: number): string => {
+    if (day <= regularSeasonDays) return `D${day}`;
+    if (numberOfDays - day === 2) return 'PlayOff';
+    if (numberOfDays - day === 1) return 'SF';
+    if (numberOfDays - day === 0) return 'F';
+    throw new Error(
+      `Day out of calendar [Supposed Number of Day: ${numberOfDays}][Days: ${day}]`
+    );
+  };
 
   return (
     <div className="flex gap-2 overflow-x-auto border-b pb-2">
-      {[...Array(props.numberOfDays)].map((_, i) => {
+      {[...Array(numberOfDays)].map((_, i) => {
         const day = i + 1;
         const isSelected = selectedDay === day;
         return (
@@ -27,7 +39,7 @@ export default function DayTabs(props: DayTabsProps) {
                 : 'bg-gray-100 hover:bg-gray-200'
             }`}
           >
-            D{day}
+            {getTabString(day)}
           </Link>
         );
       })}

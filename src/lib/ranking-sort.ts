@@ -1,3 +1,4 @@
+import { Team } from '@/types/Team';
 import { TeamRanking } from '@/types/TeamRanking';
 
 /**
@@ -6,7 +7,7 @@ import { TeamRanking } from '@/types/TeamRanking';
  */
 export function rankingSort(
   ranking: TeamRanking[],
-  teams: Array<{ id: string; name: string }>
+  teams: Team[]
 ): TeamRanking[] {
   return ranking.sort((teamA, teamB) => {
     /* Rule #1: Points */
@@ -36,8 +37,10 @@ export function rankingSort(
 
     /* By Default: Alphabetical Order */
     const getTeamName = (id: string): string => {
-      const team = teams.find((team) => team.id === teamA.teamId);
-      if (!team) throw new Error(`Team not found by ID [${id}]`);
+      const team = teams.find((team) => team.id === id);
+      if (!team) {
+        return 'To be determined';
+      }
       return team.name;
     };
     const teamAName = getTeamName(teamA.teamId);

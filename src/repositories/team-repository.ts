@@ -1,3 +1,4 @@
+import { sanitizeTeamName } from '@/lib/sanitizers';
 import { Team } from '@/types/Team';
 import { promises as fs } from 'fs';
 import path from 'path';
@@ -15,10 +16,14 @@ export class TeamRepository {
       teamsData.shift();
       teamsData.forEach((rawTeamData) => {
         const teamData = rawTeamData.split(',');
-        const team = new Team({
-          id: teamData[0],
-          name: teamData[1],
-        });
+        const id = teamData[0];
+        const name = teamData[1];
+        const logoUrl = `/team-logos/${sanitizeTeamName(name)}.svg`;
+        const team: Team = {
+          id,
+          name,
+          logoUrl,
+        };
         this.teams.push(team);
       });
       this.initialized = true;

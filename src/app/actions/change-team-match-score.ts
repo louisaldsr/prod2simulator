@@ -12,5 +12,4 @@ export async function changeTeamMatchScore(
     teamId,
     score
   );
-  
 }
