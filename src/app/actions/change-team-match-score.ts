@@ -1,6 +1,6 @@
-'use server';
+"use server";
 
-import { calendarService } from '@/services/calendar.service';
+import { calendarService } from "@/services/calendar.service";
 
 export async function changeMatchScore(
   matchId: string,

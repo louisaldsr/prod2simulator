@@ -6,6 +6,6 @@ import { rankingService } from "@/services/ranking.service";
 export async function initializeDomain() {
   await teamRepository.initialize();
   await calendarRepository.initialize(teamRepository);
-  rankingService.initialize(teamRepository, calendarRepository);
-  calendarService.initialize(calendarRepository, rankingService);
+  await rankingService.initialize(teamRepository, calendarRepository);
+  await calendarService.initialize(calendarRepository, rankingService);
 }
