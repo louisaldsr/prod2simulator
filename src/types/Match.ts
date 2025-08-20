@@ -1,10 +1,21 @@
 export interface Match {
   readonly id: string;
-  readonly homeTeamId: string;
+  readonly dayNumber: number;
+  homeTeamId: string;
   homeTeamScore: number;
-  readonly awayTeamId: string;
+  awayTeamId: string;
   awayTeamScore: number;
   simulated: boolean;
   regularSeason: boolean;
 }
 
+export type MatchSide = "home" | "away";
+
+export interface MatchResult {
+  winner: MatchSide | "draw";
+  winnerTeamId: string;
+  winnerBonus: boolean;
+  loserBonus: boolean;
+  winnerScore: number;
+  loserScore: number;
+}
