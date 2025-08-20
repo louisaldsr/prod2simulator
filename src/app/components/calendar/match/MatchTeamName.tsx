@@ -1,8 +1,8 @@
-export interface TeamMatchNameProps {
+export interface MatchTeamNameProps {
   name: string;
 }
 
-export default function TeamMatchName(props: TeamMatchNameProps) {
+export default function MatchTeamName(props: MatchTeamNameProps) {
   return (
     <span className="text-sm font-medium whitespace-nowrap">{props.name}</span>
   );

@@ -1,31 +1,25 @@
 'use client';
 
-import { getFreshCalendar } from '@/app/actions/get-fresh-calendar';
+import { getFreshRanking } from '@/app/actions/get-fresh-ranking';
+import { useScoreUpdate } from '@/app/context/ScoreContext';
 import {
   RANKING_QUALIFICATION_RULES,
   RANKING_RELEGATION_RULES,
 } from '@/constants';
-import { useScoreUpdate } from '@/context/ScoreContext';
-import { computeRanking } from '@/lib/ranking-computer';
-import { rankingSort } from '@/lib/ranking-sort';
-import { Calendar } from '@/types/Calendar';
 import { Team } from '@/types/Team';
+import { TeamRanking } from '@/types/TeamRanking';
 import { useEffect, useState } from 'react';
 import RankingHeader from './RankingHeader';
 import RankingRow from './RankingRow';
 
 interface RankingTableProps {
+  ranking: TeamRanking[];
   teams: Team[];
-  calendar: Calendar;
 }
 
 export default function RankingTable(props: RankingTableProps) {
   const { updated } = useScoreUpdate();
-  const { calendar, teams } = props;
-  const [ranking, setRanking] = useState(() => {
-    const ranking = computeRanking(calendar);
-    return rankingSort(ranking, teams);
-  });
+  const [ranking, setRanking] = useState(props.ranking);
   const numberOfTeams = ranking.length;
 
   const getBackgroundColor = (position: number): string | undefined => {
@@ -48,21 +42,18 @@ export default function RankingTable(props: RankingTableProps) {
   };
 
   const getTeam = (id: string): Team => {
-    const team = teams.find((team) => team.id === id);
-    if (!team) {
-      throw new Error(`Team with id ${id} not found`);
-    }
+    const team = props.teams.find((team) => team.id === id);
+    if (!team) throw new Error('Team in ranking not existing');
     return team;
   };
 
   useEffect(() => {
     const updateRanking = async () => {
-      const freshCalendar = await getFreshCalendar();
-      const freshRanking = computeRanking(freshCalendar);
-      setRanking(rankingSort(freshRanking, teams));
+      const newRanking = await getFreshRanking();
+      setRanking(newRanking);
     };
     updateRanking();
-  }, [updated, teams]);
+  }, [updated]);
 
   return (
     <div className="overflow-x-auto">

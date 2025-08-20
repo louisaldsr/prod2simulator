@@ -1,15 +1,10 @@
 'use server';
 
-import { calendarRepository } from '@/repositories/calendar-repository';
+import { calendarService } from '@/services/calendar.service';
 
-export async function changeTeamMatchScore(
+export async function changeMatchScore(
   matchId: string,
-  teamId: string,
-  score: number
+  newScore: [number | null, number | null]
 ): Promise<void> {
-  calendarRepository.updateMatchScore(
-    matchId,
-    teamId,
-    score
-  );
+  calendarService.updateMatchScore(matchId, newScore);
 }

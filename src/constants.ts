@@ -7,6 +7,7 @@ export const POINT_ATTRIBUTION_RULES = {
   BONUS: 1,
 };
 
+export const FINALS_DAY_FORMAT = ['playoffs', 'semi', 'final'];
 export const RANKING_QUALIFICATION_RULES = {
   SEMI_FINALS: [1, 2],
   PLAY_OFFS: [3, 4, 5, 6],
