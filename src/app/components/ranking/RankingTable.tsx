@@ -14,8 +14,16 @@ import RankingRow from "./RankingRow";
 export default function RankingTable() {
   const { updated } = useScoreUpdate();
   const { getTeam, getRanking } = useGameStore();
-  const [ranking, setRanking] = useState<TeamRanking[]>(getRanking());
+  const [ranking, setRanking] = useState<TeamRanking[]>([]);
   const numberOfTeams = ranking.length;
+
+  useEffect(() => {
+    const updateRanking = async () => {
+      const newRanking = getRanking();
+      setRanking(newRanking);
+    };
+    updateRanking();
+  }, [updated]);
 
   const getBackgroundColor = (position: number): string | undefined => {
     if (RANKING_QUALIFICATION_RULES.SEMI_FINALS.includes(position)) {
@@ -36,14 +44,6 @@ export default function RankingTable() {
     }
   };
 
-  useEffect(() => {
-    const updateRanking = async () => {
-      const newRanking = getRanking();
-      setRanking(newRanking);
-    };
-    updateRanking();
-  }, [updated]);
-
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full text-left">
@@ -53,7 +53,7 @@ export default function RankingTable() {
             const team = getTeam(teamRanking.teamId);
             return (
               <RankingRow
-                key={index}
+                key={team.id}
                 position={index + 1}
                 teamRanking={teamRanking}
                 teamLogoUrl={team.logoUrl}

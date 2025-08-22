@@ -3,7 +3,5 @@ export interface MatchTeamNameProps {
 }
 
 export default function MatchTeamName(props: MatchTeamNameProps) {
-  return (
-    <span className="text-sm font-medium whitespace-nowrap">{props.name}</span>
-  );
+  return <span className="text-sm">{props.name}</span>;
 }

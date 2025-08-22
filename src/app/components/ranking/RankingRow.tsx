@@ -1,5 +1,6 @@
-import { TeamRanking } from '@/types/TeamRanking';
-import Image from 'next/image';
+"use client";
+import { TeamRanking } from "@/types/TeamRanking";
+import Image from "next/image";
 
 export interface RankingRowProps {
   teamRanking: TeamRanking;
@@ -10,19 +11,21 @@ export interface RankingRowProps {
 }
 
 export default function RankingRow(props: RankingRowProps) {
+  const categoryClassName = "px-2 py-2";
   const { position, teamName, teamLogoUrl, teamRanking } = props;
-  const categoryClassName = 'px-2 py-2';
   const teamScoreDiff =
     teamRanking.totalScore.for - teamRanking.totalScore.against;
   const diffScoreColor =
     teamScoreDiff > 0
-      ? 'text-green-600'
+      ? "text-green-600"
       : teamScoreDiff < 0
-      ? 'text-red-600'
-      : '';
+      ? "text-red-600"
+      : "";
+
+  const rowClass = "text-sm border-gray-100 " + (props.backgroundColor ?? "");
 
   return (
-    <tr className={`text-sm border-b border-gray-100 ${props.backgroundColor}`}>
+    <tr className={rowClass}>
       <td className={`${categoryClassName} font-bold`}>{position}.</td>
       <td className={categoryClassName}>
         <div className="w-8 aspect-square overflow-hidden shrink-0">
