@@ -10,7 +10,7 @@ import {
 interface ScoreDisplayProps {
   inputScore: string;
   setInputScore: Dispatch<SetStateAction<string>>;
-  changeScoreAction: (newScore: number) => Promise<void>;
+  changeScoreAction: (newScore: number) => void;
   isSimulatable: boolean;
 }
 

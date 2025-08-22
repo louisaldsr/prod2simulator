@@ -11,9 +11,9 @@ export default function MatchRow(props: MatchRowProps) {
 
   return (
     <div className="grid items-center grid-cols-[1fr_minmax(72px,auto)_1fr] gap-4 py-2 px-3">
-      <MatchTeamDisplay key={match.homeTeamId} match={match} side="home" />
+      <MatchTeamDisplay key="home" match={match} side="home" />
       <MatchScore match={match} />
-      <MatchTeamDisplay key={match.awayTeamId} match={match} side="away" />
+      <MatchTeamDisplay key="away" match={match} side="away" />
     </div>
   );
 }

@@ -1,29 +1,25 @@
-'use client';
+"use client";
 
-import { normalizeFinalDay } from '@/helpers/normalize';
-import { useSearchParams } from 'next/navigation';
-import { DayTab } from './DayTab';
+import { useGameStore } from "@/app/context/GameStore";
+import { normalizeFinalDay } from "@/helpers/sanitizers";
+import { useSearchParams } from "next/navigation";
+import { DayTab } from "./DayTab";
 
-export interface DayTabsProps {
-  numberOfDays: number;
-  regularSeasonDays: number;
-  finalsDays: string[];
-}
-
-export default function DayTabs(props: DayTabsProps) {
+export default function DayTabs() {
   const searchParams = useSearchParams();
-  const urlSelectedDay = searchParams.get('day');
+  const urlSelectedDay = searchParams.get("day");
   const selectedDay = urlSelectedDay ? Number(urlSelectedDay) : 1;
-  const { numberOfDays, regularSeasonDays, finalsDays } = props;
 
-  if (numberOfDays !== regularSeasonDays + finalsDays.length) {
-    throw new Error('INVALID CALENDAR');
-  }
+  const calendar = useGameStore((store) => store.calendar);
+  const numberOfDays = calendar.length;
+  const regularSeasonDays = useGameStore((store) =>
+    store.getRegularSeasonLength()
+  );
 
   const getTabString = (day: number): string => {
-    if (regularSeasonDays - day >= 0) return `D${day}`;
-    else if (day - regularSeasonDays <= finalsDays.length) {
-      return normalizeFinalDay(finalsDays[day - regularSeasonDays - 1]);
+    if (day <= regularSeasonDays) return `D${day}`;
+    else if (day <= numberOfDays) {
+      return normalizeFinalDay(day - regularSeasonDays);
     } else {
       throw new Error(
         `Day out of calendar [Supposed Number of Day: ${numberOfDays}][Day: ${day}]`

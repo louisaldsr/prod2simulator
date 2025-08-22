@@ -1,4 +1,5 @@
-import { teamRepository } from "@/repositories/team.repository";
+"use client";
+import { useGameStore } from "@/app/context/GameStore";
 import { Match, MatchSide } from "@/types/Match";
 import { Team } from "@/types/Team";
 import MatchTeamLogo from "./MatchTeamLogo";
@@ -12,9 +13,11 @@ interface MatchTeamDisplayProps {
 export default function MatchTeamDisplay(props: MatchTeamDisplayProps) {
   const { match, side } = props;
   const teamId = side === "home" ? match.homeTeamId : match.awayTeamId;
+  const getTeam = useGameStore((store) => store.getTeam);
+
   let team: Team;
   try {
-    team = teamRepository.getTeamById(teamId);
+    team = getTeam(teamId);
   } catch (error) {
     if (match.regularSeason) throw error;
     team = {

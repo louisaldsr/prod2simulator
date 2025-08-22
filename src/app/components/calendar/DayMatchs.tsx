@@ -1,16 +1,16 @@
-import { calendarRepository } from "@/repositories/calendar.repository";
-import { Day } from "@/types/Calendar";
+"use client";
+import { useGameStore } from "@/app/context/GameStore";
 import MatchRow from "./match/MatchRow";
 
 export interface DayMatchsProps {
   selectedDay: number;
 }
 
-export default async function DayMatchs(props: DayMatchsProps) {
-  let dayMatchs: Day;
-  try {
-    dayMatchs = calendarRepository.getCalendarDay(props.selectedDay);
-  } catch {
+export default function DayMatchs(props: DayMatchsProps) {
+  const calendar = useGameStore((store) => store.calendar);
+  const dayMatchs = calendar[props.selectedDay - 1];
+
+  if (!dayMatchs) {
     return <div>No match for this day</div>;
   }
 

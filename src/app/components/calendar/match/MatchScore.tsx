@@ -1,6 +1,6 @@
 "use client";
 
-import { changeMatchScore } from "@/app/actions/change-team-match-score";
+import { useGameStore } from "@/app/context/GameStore";
 import { Match } from "@/types/Match";
 import { useState } from "react";
 import ScoreDisplay from "./ScoreInput";
@@ -11,6 +11,7 @@ export interface MatchScoreProps {
 
 export default function MatchScore(props: MatchScoreProps) {
   const { match } = props;
+  const matchId = match.id;
   const isSimulatable = match.homeTeamId === "" || match.awayTeamId === "";
   const [inputHomeScore, setInputHomeScore] = useState<string>(
     match.homeTeamScore.toString()
@@ -19,13 +20,15 @@ export default function MatchScore(props: MatchScoreProps) {
     match.awayTeamScore.toString()
   );
 
+  const changeMatchScore = useGameStore((store) => store.updateMatchScore);
+
   return (
     <div className="inline-flex items-center gap-2 tabular-nums font-semibold">
       <ScoreDisplay
         inputScore={inputHomeScore}
         setInputScore={setInputHomeScore}
         changeScoreAction={(newScore: number) =>
-          changeMatchScore(match.id, [newScore, null])
+          changeMatchScore({ matchId, homeScore: newScore, awayScore: null })
         }
         isSimulatable={isSimulatable}
       />
@@ -34,7 +37,7 @@ export default function MatchScore(props: MatchScoreProps) {
         inputScore={inputAwayScore}
         setInputScore={setInputAwayScore}
         changeScoreAction={(newScore: number) =>
-          changeMatchScore(match.id, [null, newScore])
+          changeMatchScore({ matchId, homeScore: null, awayScore: newScore })
         }
         isSimulatable={isSimulatable}
       />
